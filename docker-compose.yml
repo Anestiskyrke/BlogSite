@@ -1,0 +1,28 @@
+version: "3.1"
+services:
+
+    www:
+        build: .
+        container_name: 'blog-server'
+        volumes:
+            - ".:/var/www/html"
+        ports:
+            - "80:80"
+            - "443:443"
+            
+    db:
+        image: mariadb:10.5.9
+        container_name: 'blog-mysql'
+        restart: always
+        ports:
+            - '13306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpw'
+            MYSQL_USER: 'root'
+            MYSQL_PASSWORD: 'rootpw'
+            MYSQL_DATABASE: 'blog'
+        volumes:
+            - db_data:/var/lib/mysql
+    
+volumes:
+  db_data:

@@ -1,0 +1,51 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+
+app_register:
+    path: /register
+    controller: App\Controller\AuthorController::register
+
+app_login:
+    path: /login
+    controller: App\Controller\AuthorController::login
+
+homepage:
+    path: /
+    controller: App\Controller\BlogController::entriesAction
+
+app_logout:
+    path: /logout            
+    methods: GET
+
+admin_create_entry:
+    path: /new_entry
+    controller: App\Controller\BlogController::createEntryAction
+
+admin_entries:
+    path: /entries
+    controller: App\Controller\BlogController::entriesAction
+
+delete_entries:
+    path: /delete_entry/{id}
+    controller: App\Controller\BlogController::deleteEntryAction
+
+create_product:
+    path: /product
+    controller: App\Controller\ProductController::createProduct
+
+details_entries:
+    path: /entries/{slug}
+    controller: App\Controller\BlogController::detailsAction
+
+edit_entries:
+    path: /edit/{id}
+    controller: App\Controller\BlogController::editEntryAction
+
+about_us:
+    path: /about_us
+    controller: App\Controller\BlogController::aboutUsAction
