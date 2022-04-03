@@ -2,40 +2,48 @@
 {% block title %}{% endblock %}
 {% block body %}
     <div class="container">
-        <a href="{{ path('admin_entries') }}" class="btn btn-dark">Return</a>
-        <a href="{{ path('admin_create_entry') }}" class="btn btn-secondary">Add Entry</a>
-        {% for blogPost in blogPosts %}
-            <div class="card">
-                <div class="card-header">
-                    <h5 class = "card-title">Title</h4>
-                    <p class = "card-text">{{blogPost.title}}</p>
+        <div class="card" style='border:none; margin-top:10%'>
+            <h2 class='card-title' style='text-align:center;'>{{blogPost.title}}</h2>
+            <div class='card-img-top' style='margin-bottom:0.5%; margin-top:1%; text-align:center'>{{blogPost.imageURL|raw}}</div>
+            <div class="card-body">
+                <div class='row'>
+                    <div class='col-md-auto'>
+                        <img src = "{{profileImage}}" class='rounded-circle' style="width:90px; height:90px;"></img>
+                    </div>
+                    <div class='col'>
+                        <h4>{{blogPost.author.username}}</h4>
+                        <h6 class='text-muted'>{{blogPost.slug}}. {{blogPost.createdAt|date('F j, Y') }}</h6>
+                        <p class='text-muted'>{{blogPost.updatedAt|date('F j, Y') }}</p>
+                    </div>
+                    <div class='col-5'>
+                        <div class='text-muted'>{{blogPost.description|raw}}</div>
+                    </div>
                 </div>
-                <div class="card-header">
-                    <h5 class = "card-title">Description</h4>
-                    <p class = "card-text">{{blogPost.description}}</p>
-                </div>
-                <div class="card-body">
-                    <h5 class = "card-title">Slug</h4>
-                    <p class = "card-text">{{blogPost.slug}}</p>
-                </div>
-                <div class="card-body">
-                    <h4 class = "card-title">Body </h4>
-                    <p class = "card-text">{{blogPost.body}}</p>
-                </div>
-                <div class="card-body">
-                    <h5 class = "card-title">Author</h4>
-                    <p class = "card-text">{{blogPost.author.username}}</p>
-                </div> 
-                <div class="card-footer">
-                    <h5 class = "card-title">Created At</h4>
-                    <p class = "card-text">{{blogPost.createdAt|date('F j, Y') }}</p>
-                </div> 
-                <div class="card-footer">
-                    <h5 class = "card-title">Updated At</h4>
-                    <p class = "card-text">{{blogPost.updatedAt|date('F j, Y') }}</p>
-                </div> 
-                
+                <p>{{blogPost.body|raw}}</p>
             </div>
-        {% endfor %}
+        </div>
+        <div class = 'row' style='text-align:center'>
+            <h4>Related Posts</h4>
+            {% for relatedPost in relatedPosts %}                 
+                <div class='card' style=' text-align:center; border:none; width:300px; height:450px; margin-left:1%; margin-right:1%; margin-bottom:2%;'>
+                    <a href="{{ path('details_entries',{'slug':relatedPost.slug}) }}">
+                    <div class='card-img-top'>{{relatedPost.imageURL|raw}}</a></div>
+                    <div class='card-body'>
+                        <a href="{{ path('details_entries',{'slug':relatedPost.slug}) }}" style='color:#000000; text-decoration:none;'><h5 class='card-title'>{{relatedPost.title}}</h5></a>
+                        {{relatedPost.description|raw}} 
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <a style="position:fixed;bottom:50%;left:5px;margin:0;padding:5px 3px; color: #000000; text-decoration: none;" href="javascript:history.back()"><i class="bi bi-arrow-left"></i></a>
+        {% if is_granted('POST_EDIT',blogPost) %}
+            <a class='dropdown'>
+                <a class="btn dropdown-toggle" id='dropDownMenuLink' data-bs-toggle="dropdown" aria-expanded='false' style = 'position:fixed;bottom:45%;left:5px;margin:0;padding:5px 3px;'><i class="bi bi-gear"></i></a>
+                <ul class='dropdown-menu' aria-labelledby="dropdownMenuLink">
+                    <li><a class='dropdown-item' href="{{ path('edit_entries',{'id':blogPost.id}) }}" >Edit</a></li>
+                    <li><a class='dropdown-item' href="{{ path('delete_entries',{'id':blogPost.id}) }}" >Delete</a></li>
+                </ul>
+            </a>
+        {% endif %}
     </div>
 {% endblock %}

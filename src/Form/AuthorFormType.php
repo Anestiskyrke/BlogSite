@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Author;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,21 +39,12 @@ class AuthorFormType extends AbstractType
                 ]
             )
             ->add(
-                'password',
+                'profileImage',
                 TextType::class,
                 [
-                    'constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control']
+                    'attr' => ['class' => 'form-control', 'class' => 'tinymce']
                 ]
-            )
-            ->add(
-                'email',
-                TextType::class,
-                [
-                    'constraints' => [new NotBlank()],
-                    'attr' => ['class' => 'form-control']
-                ]
-            )
+            )            
             ->add(
                 'phone',
                 TextType::class,
@@ -65,7 +58,7 @@ class AuthorFormType extends AbstractType
                 SubmitType::class,
                 [
                     'attr' => ['class' => 'form-control btn-primary pull-right'],
-                    'label' => 'Become an author!'
+                    'label' => 'Save changes!'
                 ]
             );
     }

@@ -3,9 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\BlogPostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Author;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: BlogPostRepository::class)]
+#[UniqueEntity(fields: ['title', 'slug'], message: 'There is already a post with that title/slug.')]
 
 class BlogPost
 {
@@ -17,16 +23,30 @@ class BlogPost
     private $slug;
     #[ORM\Column(type: 'string', length:255)]
     private $title;
-    #[ORM\Column(type: 'string', length:255)]
+    #[ORM\Column(type: 'text')]
     private $description;
-    #[ORM\Column(type: 'string', length:255)]
+    #[ORM\Column(type: 'text')]
     private $body;
-    #[ORM\Column(type: 'object')]
-    private $author;
+    #[ORM\Column(type: 'text')]
+    private $imageURL;
+    #[ORM\Column(type: 'string', length:255)]
+    private $category;
     #[ORM\Column(type: 'date')]
     private $createdAt;
     #[ORM\Column(type: 'date')]
     private $updatedAt;
+
+    #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'blogPosts')]
+    private $author;
+
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[ORM\JoinTable(name:'relatedPosts', joinColumns:['blogPost_a_id', 'id'], inverseJoinColumns:['blogPost_b_id', 'id'])]
+    private $relatedPosts;
+
+    public function __construct()
+    {
+        $this->relatedPosts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,14 +95,25 @@ class BlogPost
         return $this;
     }
 
-    public function getAuthor()
+    public function getImageURL()
     {
-        return $this->author;
+        return $this->imageURL;
     }
-    public function setAuthor(Author $author)
+    public function setImageURL($imageURL)
     {
-        $this->author = $author;
 
+        $this->imageURL = $imageURL;
+        
+        return $this;
+    }
+
+    public function getCategory()
+    {
+        return $this->category; 
+    }
+    public function setCategory($category)
+    {
+        $this->category = $category;
         return $this;
     }
 
@@ -118,6 +149,42 @@ class BlogPost
         if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTime('now'));
         }
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getRelatedPosts(): Collection
+    {
+        return $this->relatedPosts;
+    }
+
+    public function addRelatedPost(self $relatedPost): self
+    {
+        if (!$this->relatedPosts->contains($relatedPost)) {
+            $this->relatedPosts[] = $relatedPost;
+        }
+
+        return $this;
+    }
+
+    public function removeRelatedPost(self $relatedPost): self
+    {
+        $this->relatedPosts->removeElement($relatedPost);
+
+        return $this;
     }
 
 }

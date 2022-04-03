@@ -3,22 +3,36 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-
-        <div class="registrationForm-group col-3">
-            {{ form_row(registrationForm.name)}}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.phone) }}
-            {{ form_row(registrationForm.username) }}
-            {{ form_row(registrationForm.plainPassword, {
-                label: 'Password'
-            }) }}
+    <div class='grid-container d-flex justify-content-center' style='margin:5%;'>
+        <div class='box-wrapper' style='text-align:center; border:none;'>
+            <h2 class='logo'><img src='https://avatars.slack-edge.com/2019-03-20/583937946071_ec0495d5608b9ff7d012_88.jpg' class='rounded-circle'></img>
+            <p class='text-align:justify'>Code Seed</p></h2>
+            <div class='box-wrapper-inner p-4'>
+                {{form_start(registrationForm)}}
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.name, {'attr': {'placeholder': 'Your name'}}) }}
+                    </div>
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.email, {'attr': {'placeholder': 'Your email address'}}) }}
+                    </div>
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.phone, {'attr': {'placeholder': 'Your phone number'}}) }}
+                    </div>
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.username, {'attr': {'placeholder': 'Your username'}}) }}
+                    </div>
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Your password'}}) }}
+                    </div>
+                    <div class="form-check mb-3 me-5">
+                        <label class="form-check-label" for="agreeTerms">
+                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'label': 'I agree to the Terms of Service'}}) }}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-grad text-body" href={{path('app_login')}}>Register</button>
+                    <p class="text-center text-muted mt-3 mb-0">Have already an account? <a href={{path('app_login')}} class="fw-bold text-body"><u>Login here</u></a></p>
+                {{form_end(registrationForm)}}
+            </div>
         </div>
-        <div class="registrationForm-group bg-white col-md-1 rounded">
-            {{ form_row(registrationForm.agreeTerms) }}
-        </div>
-        <button type="submit" class="btn btn-light">Register</button>
-    {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

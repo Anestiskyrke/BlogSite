@@ -45,33 +45,25 @@ class BlogController extends AbstractController
 
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
-
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $blogPost->updatedTimestamps();
-            $this->entityManager->persist($blogPost);
-            $this->entityManager->flush($blogPost);
+            $this->blogPostRepository->add($blogPost,true);
 
             $this->addFlash('success', 'Congratulations! Your post is created');
 
-            return $this->redirectToRoute('admin_entries');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('admin/entry_form.html.twig', [
+            'blogPost' => $blogPost,
             'form' => $form->createView()
         ]);
     }
     
     public function deleteEntryAction($id)
     {
-        /*
-        if(!($this->isGranted("ROLE_USER"))) // check if a user is logged in
-        {
-            return $this->redirectToRoute("app_login");
-        }
-        */
         $blogPost = $this->blogPostRepository->find($id);
-        #$author = $this->authorRepository->findOneByUsername($this->getUser()->getUserIdentifier());
         $this->denyAccessUnlessGranted('POST_EDIT',$blogPost);
         $this->entityManager->remove($blogPost);
         $this->entityManager->flush();
@@ -86,52 +78,40 @@ class BlogController extends AbstractController
         $blogPosts = $this->blogPostRepository->findAll();
         
         return $this->render('blog/entries.html.twig', [
-            'blogPosts' => $blogPosts
+            'blogPosts' => $blogPosts,          
         ]);
     }
 
     public function detailsAction($slug): Response
     {
-        if(!($this->isGranted("ROLE_USER"))) // check if a user is logged in
-        {
-            return $this->redirectToRoute("app_login");
-        }
+        $blogPost = $this->blogPostRepository->findOneBySlug($slug);
+        $this->denyAccessUnlessGranted('POST_VIEW',$blogPost);
+        $author = $this->authorRepository->findOneById($blogPost->getAuthor()->getId());
+        $profileImage = $author->getProfileImage();
+        
+        $categoryPosts = $this->blogPostRepository->findByCategory($blogPost->getCategory());
 
-        #$author = $this->authorRepository->findOneByUsername($this->getUser()->getUserIdentifier());
-        /*
-        if(!$author)
-        {
-            $this->addFlash("danger", "You can't see details of a post.");
-            return $this->redirectToRoute('admin_entries');
+        $authorPosts = $this->blogPostRepository->findByAuthor($blogPost->getAuthor());
+        $relatedPosts = array_merge($categoryPosts, $authorPosts);
+        #$relatedPosts = $this->blogPostRepository->findBy(array('category' => $blogPost->getCategory(), 'author' => $blogPost->getAuthor()));
+        if(($key = array_search($blogPost, $relatedPosts, TRUE)) !== FALSE) {
+            unset($relatedPosts[$key]);
         }
-        */
-        $blogPosts = [];
-        $blogPosts = $this->blogPostRepository->findBySlug($slug);
-        #dd("View Granted");
-        #$this->denyAccessUnlessGranted('POST_VIEW',$blogPosts);
-        #dd("View Denied");
+        if(count($relatedPosts)>4)
+        {
+            shuffle($relatedPosts);
+            $relatedPosts = array_slice($relatedPosts, 0, 4);
+        }
         return $this->render('blog/details_entries.html.twig', [
-            'blogPosts' => $blogPosts
+            'blogPost' => $blogPost,
+            'relatedPosts' => $relatedPosts,
+            'profileImage' => $profileImage
         ]);
     }
 
     public function editEntryAction($id, Request $request)
     {
-        /*
-        if(!($this->isGranted("ROLE_USER"))) // check if a user is logged in
-        {
-            return $this->redirectToRoute("app_login");
-        }
-        */
-        
         $blogPost = $this->blogPostRepository->find($id);
-        /*
-        if(!($author == $blogPost->getAuthor()) && in_array('ROLE_ADMIN', $authorRoles) == false)
-        {
-            $this->addFlash("danger", "You can't edit another user's posts.");
-            return $this->redirectToRoute('admin_entries');
-        }
-        */
         $this->denyAccessUnlessGranted('POST_EDIT',$blogPost);
         $form = $this->createForm(EntryFormType::class, $blogPost);
         $form->handleRequest($request);
@@ -148,7 +128,8 @@ class BlogController extends AbstractController
         }
         
         return $this->render('admin/edit_entries.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'imageURL' => $blogPost->getImageURL()
         ]);
     }
 

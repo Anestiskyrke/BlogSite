@@ -2,11 +2,11 @@
 {% block title %}{% endblock %}
 {% block body %}
     <div class="container">
-        <div class="blog-header">
+        <div class="blog-header" style='margin-top:5%; margin-left:3%;'>
             <h1 class="blog-title">Blog Posts</h1>
             <p class="lead blog-description"></p>
         </div>
-        <div class="row">
+        <div class="row w-100" style='margin-left:2%; margin-right:2%;'>
             <div class="col-md-12 col-lg-12 col-xl-12">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
@@ -17,53 +17,16 @@
                     {% endfor %}
                 {% endfor %}
             </div>
-            {#<div class="col-md-12 col-lg-12 col-xl-12">
-                <div class="btn-group">
-            {# We can disable the button Return with CSS when we are not in details 
-                    <a href="{{ path('admin_entries') }}" class="btn btn-dark">Return</a>
-                    <a href="{{ path('admin_create_entry') }}" class="btn btn-secondary">Add Entry</a>
-                    {#<a href="{{ path('app_logout') }}" class="btn btn-light">Logout</a>
+            {% for blogPost in blogPosts %}                 
+                <div class='card' style='border:none; width:300px; height:450px; margin-left:0%; margin-right:1%; margin-bottom:2%;'>
+                    <a href="{{ path('details_entries',{'slug':blogPost.slug}) }}">
+                    <div class='card-img-top'>{{blogPost.imageURL|raw}}</a></div>
+                    <div class='card-body'>
+                        <a href="{{ path('details_entries',{'slug':blogPost.slug}) }}" style='color:#000000; text-decoration:none;'><h5 class='card-title'>{{blogPost.title}}</h5></a>
+                        {{blogPost.description|raw}} 
+                    </div>
                 </div>
-            </div>#}
-            <div class="col-sm-12 blog-main">
-                <table class="table table-hover table-bordered" style='border:0;'>
-                    <thead>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <th>Author</th>
-                        <th>Post</th>
-                    </thead>
-                    
-                    {% for blogPost in blogPosts %}
-                        <tr>
-                            <td>{{ blogPost.title }}</td>
-                            <td>{{ blogPost.description }}</td>
-                            <td>{{ blogPost.createdAt|date('F j, Y') }}</td>
-                            <td>{{ blogPost.updatedAt|date('F j, Y') }}</td>
-                            <td>{{ blogPost.Author.username}}</td>
-                            {% if is_granted('POST_EDIT',blogPost) %}
-                                <td><a class='dropdown'>
-                                    <a class="btn btn-light dropdown-toggle" type='rounded-button' id='dropDownMenuLink' data-bs-toggle="dropdown" aria-expanded='false'>Options</a>
-                                    <ul class='dropdown-menu' aria-labelledby="dropdownMenuLink">
-                                        <li><a class='dropdown-item' href="{{ path('details_entries',{'slug':blogPost.slug}) }}">View</a></li>
-                                        <li><a class='dropdown-item' href="{{ path('edit_entries',{'id':blogPost.id}) }}" >Edit</a></li>
-                                        <li><a class='dropdown-item' href="{{ path('delete_entries',{'id':blogPost.id}) }}" >Delete</a></li>
-                                    </ul>
-                                </a></td>
-                            {% elseif is_granted('POST_VIEW',blogPost) and app.user!=blogPost.Author %}
-                                <td><a href="{{ path('details_entries',{'slug':blogPost.slug}) }}" class='btn btn-light'>View</a></td>
-                            {% endif %}
-                            
-                            
-                        </tr>
-                    
-</AmpContent>
-
-                    {% endfor %}
-                </table>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

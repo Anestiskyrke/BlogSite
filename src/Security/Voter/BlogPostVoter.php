@@ -24,6 +24,8 @@ class BlogPostVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
+        #dd($attribute);
+        #dd($subject);
         return in_array($attribute, [self::EDIT, self::VIEW])
             && $subject instanceof \App\Entity\BlogPost;
     }
@@ -31,12 +33,10 @@ class BlogPostVoter extends Voter
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
-        // if the user is anonymous, do not grant access
-        /*
         if (!$user instanceof Author) {
             return false;
         }
-        */
+
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
@@ -50,9 +50,6 @@ class BlogPostVoter extends Voter
                 return true;
             case self::EDIT:
                 // logic to determine if the user can EDIT
-                if (!$user instanceof Author) {
-                    return false;
-                }
                 return $this->canEdit($blogPost,$user);
                 // return true or false
             
@@ -64,6 +61,6 @@ class BlogPostVoter extends Voter
 
     private function canEdit(BlogPost $blogPost, Author $user):bool
     {   
-        return $user == $blogPost->getAuthor();
+        return $user->getID() == $blogPost->getAuthor()->getID();
     }
 }

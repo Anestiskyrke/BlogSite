@@ -3,26 +3,35 @@
 {% block title %}Login Page{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-    <form action="{{ path('app_login') }}" method="post">
-        <div class= 'mb-3'>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-        </div>
-        <div class = 'md-3'>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password"/>
-        </div>
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
-        <input type="hidden" name="_target_path" value="{{path('admin_entries')}}"/>
-        <button type="submit" class="btn btn-light">Login</button>    
-        {% if not app.user %}   
-            <a href={{path("app_register")}} class = "btn btn-light">Register</a>
+    
+
+    <div class='grid-container' style='margin:10%; text-align:center;'>
+        <h2 class='logo'><img src='https://avatars.slack-edge.com/2019-03-20/583937946071_ec0495d5608b9ff7d012_88.jpg' style="width:5%; height:5%;" class='rounded-circle'></img>
+        <p class='text-align:justify'>Code Seed</p></h2>
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-        <a href={{path("admin_entries")}} class = "btn btn-light">Blog Posts</a>
-    </form>
-   
+        <form action="{{ path('app_login') }}" method="post">
+            <div class = 'mb-3'>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+            </div>
+            <div class = 'md-3'>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="_password"/>
+            </div>
+            {# If you want to control the URL the user is redirected to on success
+            <input type="hidden" name="_target_path" value="/account"/> #}
+            <input type="hidden" name="_target_path" value="{{path('homepage')}}"/>
+            <div style='margin-top:10px;'>
+                <button type="submit" class="btn btn-grad text-body">Login</button>    
+                {% if not app.user %}   
+                    <a href={{path("app_register")}} class="btn btn-grad text-body">Register</a>
+                {% else %}
+                    <a href={{path("app_logout")}} class="btn btn-grad text-body">Logout</a>
+                {% endif %}
+                <a href={{path("admin_entries")}} class="btn btn-grad text-body">Blog Posts</a>
+            </div>
+        </form>
+    </div>
 {% endblock %}

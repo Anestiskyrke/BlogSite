@@ -521,6 +521,9 @@
     "symfony/yaml": {
         "version": "v6.0.3"
     },
+    "tinymce/tinymce": {
+        "version": "6.0.1"
+    },
     "twig/extra-bundle": {
         "version": "v3.3.8"
     },

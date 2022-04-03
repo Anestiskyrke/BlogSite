@@ -22,6 +22,10 @@ app_logout:
     path: /logout            
     methods: GET
 
+edit_user:
+    path: /profile
+    controller: App\Controller\AuthorController::editProfile
+
 admin_create_entry:
     path: /new_entry
     controller: App\Controller\BlogController::createEntryAction
@@ -33,10 +37,6 @@ admin_entries:
 delete_entries:
     path: /delete_entry/{id}
     controller: App\Controller\BlogController::deleteEntryAction
-
-create_product:
-    path: /product
-    controller: App\Controller\ProductController::createProduct
 
 details_entries:
     path: /entries/{slug}

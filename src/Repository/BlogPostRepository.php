@@ -49,27 +49,28 @@ class BlogPostRepository extends ServiceEntityRepository
     //  * @return BlogPost[] Returns an array of BlogPost objects
     //  */
     
-    public function findByAuthor($value)
+    public function findByCategoryandAuthor($category, $author)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.author = :val')
-            ->setParameter('val', $value)
+            ->andWhere('b.category = :val1')
+            ->andWhere('b.author = :val2')
+            ->setParameter('val1', $category)
+            ->setParameter('val2', $author)
             ->orderBy('b.id', 'ASC')
+            ->groupBy('b.category')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
     
-    public function findBySlug($value)
+    public function findOneBySlug($value)
     {
         return $this->createQueryBuilder('b')
             ->andWhere('b.slug = :val')
             ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 
