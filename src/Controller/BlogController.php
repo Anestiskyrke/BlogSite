@@ -88,7 +88,8 @@ class BlogController extends AbstractController
         $this->denyAccessUnlessGranted('POST_VIEW',$blogPost);
         $author = $this->authorRepository->findOneById($blogPost->getAuthor()->getId());
         $profileImage = $author->getProfileImage();
-        
+        $relatedPosts = $blogPost->getRelatedPosts();
+        /*
         $categoryPosts = $this->blogPostRepository->findByCategory($blogPost->getCategory());
 
         $authorPosts = $this->blogPostRepository->findByAuthor($blogPost->getAuthor());
@@ -102,6 +103,7 @@ class BlogController extends AbstractController
             shuffle($relatedPosts);
             $relatedPosts = array_slice($relatedPosts, 0, 4);
         }
+        */
         return $this->render('blog/details_entries.html.twig', [
             'blogPost' => $blogPost,
             'relatedPosts' => $relatedPosts,

@@ -36,6 +36,9 @@
                             <label for="category">Blog post category</label>
                             {{form_widget(form.category) }}
                         </div>
+                        <div class='form-group col-md-4'>
+                            {{form_widget(form.relatedPosts)}}
+                        </div>
                         <div class="form-group col-md-2" style='margin-top:1%;'>
                             {{ form_widget(form.create, { 'label': 'Edit Post!', 'attr': {'class': 'btn btn-grad text-body'}})  }}
                         </div>

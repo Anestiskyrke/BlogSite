@@ -90,10 +90,10 @@ class EntryFormType extends AbstractType
                 'relatedPosts',
                 EntityType::class,
                 [
-                    'class' => BlogPost::class,
-                    'choice_label' => 'relatedPosts',
-                    'multiple' => false,
-                    'expanded' => true
+                    'class'     => BlogPost::class,
+                    'choice_label' => 'title',
+                    'expanded'  => true,
+                    'multiple'  => true,
                 ]
             )
             ->add(
