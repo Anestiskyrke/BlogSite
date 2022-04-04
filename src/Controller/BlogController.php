@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use App\Entity\BlogPost;
 use App\Form\EntryFormType;
+use App\Form\SearchBlogPostType;
 
 class BlogController extends AbstractController
 {
@@ -72,13 +74,51 @@ class BlogController extends AbstractController
         return $this->redirectToRoute("admin_entries"); 
     }
 
-    public function entriesAction()
+    public function entriesAction(Request $request): Response
     {
         $blogPosts = [];
-        $blogPosts = $this->blogPostRepository->findAll();
-        
+        $blogPost = new BlogPost();
+        $form = $this->createForm(SearchBlogPostType::class, $blogPost);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $value = $form->getData()->getCategory();
+            if($value == null)
+                $blogPosts = $this->blogPostRepository->findAll();
+            else
+                $blogPosts = $this->blogPostRepository->findByCategory($value);
+            
+            return $this->render('blog/entries.html.twig', [
+                'blogPosts' => $blogPosts,
+                'form' => $form->createView()
+            ]);
+        }
         return $this->render('blog/entries.html.twig', [
-            'blogPosts' => $blogPosts,          
+            'blogPosts' => $this->blogPostRepository->findAll(),
+            'form' => $form->createView()
+        ]);
+        
+    }
+
+    public function searchAction(Request $request): Response
+    {
+        $blogPosts = [];
+        $blogPost = new BlogPost();
+        $form = $this->createForm(SearchBlogPostType::class, $blogPost);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $value = $form->getData()->getCategory();
+            $blogPosts = $this->blogPostRepository->findByCategory($value);
+            
+            return $this->render('blog/entries.html.twig', [
+                'blogPosts' => $blogPosts
+            ]);
+        }
+        return $this->render('blog/index.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
@@ -89,21 +129,7 @@ class BlogController extends AbstractController
         $author = $this->authorRepository->findOneById($blogPost->getAuthor()->getId());
         $profileImage = $author->getProfileImage();
         $relatedPosts = $blogPost->getRelatedPosts();
-        /*
-        $categoryPosts = $this->blogPostRepository->findByCategory($blogPost->getCategory());
-
-        $authorPosts = $this->blogPostRepository->findByAuthor($blogPost->getAuthor());
-        $relatedPosts = array_merge($categoryPosts, $authorPosts);
-        #$relatedPosts = $this->blogPostRepository->findBy(array('category' => $blogPost->getCategory(), 'author' => $blogPost->getAuthor()));
-        if(($key = array_search($blogPost, $relatedPosts, TRUE)) !== FALSE) {
-            unset($relatedPosts[$key]);
-        }
-        if(count($relatedPosts)>4)
-        {
-            shuffle($relatedPosts);
-            $relatedPosts = array_slice($relatedPosts, 0, 4);
-        }
-        */
+        
         return $this->render('blog/details_entries.html.twig', [
             'blogPost' => $blogPost,
             'relatedPosts' => $relatedPosts,

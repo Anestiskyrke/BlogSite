@@ -74,12 +74,12 @@
         <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid" id="navbarNav">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <img src='https://avatars.slack-edge.com/2019-03-20/583937946071_ec0495d5608b9ff7d012_88.jpg' class='rounded-circle' style="width:35px; height:35px;">Code Seed</img>
+                    <a class="navbar-brand" href='https://www.codeseed.io'style='color: #000000; text-decoration: none;'>
+                        <img src='https://avatars.slack-edge.com/2019-03-20/583937946071_ec0495d5608b9ff7d012_88.jpg' class='rounded-circle' style="width:35px; height:35px; ">Code Seed</img>
                     </a>
                 </div>
                 <ul class="navbar-nav" style="text-align:center">
-                    <li class="px-4">
+                    <li class="px-5">
                     <li class="nav-item active">
                         <a class="nav-link" href={{path('homepage')}}>Home</a>
                     </li>
@@ -87,12 +87,10 @@
                         <a class="nav-link" href={{path('admin_create_entry')}}>New Post</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href={{path('admin_entries')}}>Blog Posts</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href={{path('about_us')}}>About Us</a>
                     </li>
                 </ul>
+                
                 <ul class="navbar-nav navbar-right navbar-fixed">  
                     <li class="nav-item">
                         {% if app.user %}
