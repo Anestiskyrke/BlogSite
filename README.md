@@ -8,7 +8,7 @@ docker compose up -d --build
 Create the database
 
 ```bash
-docker exec -it blog-server sh -c "bin/console doctrine:migrations:migrate"
+docker exec -it blog-server sh -c "bin/console d:m:m"
 ```
 
 The above command runs the migration files, creating the database.
