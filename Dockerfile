@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:8.1-apache
 
 ADD etc/000-default.conf $APACHE_CONFDIR/sites-available/000-default.conf
 ADD etc/php.ini /usr/local/etc/php/conf.d/php.ini
@@ -17,6 +17,7 @@ RUN apt-get update \
         acl \
         libzip-dev \
         cmdtest \
+        npm \
     && docker-php-ext-install \
         intl \
         opcache \

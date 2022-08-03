@@ -27,7 +27,7 @@ class AuthorController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->authorRepository = $entityManager->getRepository('App:Author');
+        $this->authorRepository = $entityManager->getRepository(Author::class);
     }
     
     public function login(AuthenticationUtils $authenticationUtils): Response

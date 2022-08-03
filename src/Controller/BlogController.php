@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,8 +29,8 @@ class BlogController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->blogPostRepository = $entityManager->getRepository('App:BlogPost');
-        $this->authorRepository = $entityManager->getRepository('App:Author');
+        $this->blogPostRepository = $entityManager->getRepository(BlogPost::class);
+        $this->authorRepository = $entityManager->getRepository(Author::class);
     }
     
     public function createEntryAction(Request $request)

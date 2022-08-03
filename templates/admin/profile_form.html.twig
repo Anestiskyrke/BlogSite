@@ -22,18 +22,16 @@
                                 <label for="phone">Phone</label>
                                 {{ form_widget(authorForm.phone) }}
                             </div>
+                            <div class="authorForm-group md-3">
+                                <label for="profileImage">Image profile</label>
+                                {{form_widget(authorForm.profileImage)}}
+                                <img src = "{{profileImage}}" class='rounded-circle' style="width:200px; height:200px;"></img>
+                            </div>
                             <div class="form-group mb-3">
                                 {{ form_widget(authorForm.submit, { 'label': 'Edit profile!', 'attr': {'class': 'btn btn-grad text-body'}})  }}
                             </div>
                         </div>
-                    </div>
-                    <div class='col' >
-                        <div class="authorForm-group md-4" style='margin-left:20%;'>
-                            <label for="profileImage">Image profile</label>
-                            {{form_widget(authorForm.profileImage)}}
-                        </div>
-                        <img src = "{{profileImage}}" class='rounded-circle' style="width:125px; height:125px; margin-left:20%"></img>
-                    </div>
+                    </div>                        
                 </div>
             {{form_end(authorForm)}}
         </div>

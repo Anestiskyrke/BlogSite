@@ -24,6 +24,14 @@
                     <div class="registrationForm-group mb-3">
                         {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Your password'}}) }}
                     </div>
+                    <div class="registrationForm-group mb-3">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'placeholder': 'Your password'}}) }}
+                    </div>
+                    <div class="authorForm-group md-4" style='margin-left:20%;'>
+                        <label for="profileImage">Image profile</label>
+                        {{form_widget(authorForm.profileImage)}}
+                        <img src = "{{profileImage}}" class='rounded-circle' style="width:125px; height:125px; margin-left:20%"></img>
+                    </div>
                     <div class="form-check mb-3 me-5">
                         <label class="form-check-label" for="agreeTerms">
                         {{ form_widget(registrationForm.agreeTerms, {'attr': {'label': 'I agree to the Terms of Service'}}) }}
