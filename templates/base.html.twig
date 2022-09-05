@@ -4,71 +4,68 @@
     
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {#{ encore_entry_link_tags('app') }#}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+            {#<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
+            #}<style>
+            img {
+                max-width:100%;
+                height: auto;
+
+            }
+            .bi {  
+                text-align: center;  
+                margin: 5px 2px;  
+                font-size: 25px;  
+                width: 25px;  
+            }  
+            .bi:hover {
+                opacity: 0.6;
+            }
+            
+            .btn-grad {background-image: linear-gradient(to right, #348F50 0%, #56B4D3  51%, #348F50  100%)}
+            .btn-grad {
+                text-transform: uppercase;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;            
+                box-shadow: 0 0 20px #eee;
+                border-radius: 10px;
+            } 
+            .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+            }
+            body{ height:100vh; margin:0; }
+
+            header{ min-height:50px; }
+
+            /* Trick */
+            body{ 
+                display:flex; 
+                flex-direction:column; 
+            }
+            page-container{
+                position: relative;
+                min-height: 100vh;
+            }
+
+            content-wrap{
+                padding-bottom: 2.5rem;    /* Footer height */
+            }
+
+            footer{
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+            }
+            </style>
         {% endblock %}
-
-        {% block javascripts %}
-            {#{ encore_entry_link_tags('app') }#}
-        {% endblock %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        {#<style>
-        body{
-            background-image: url('https://i.pinimg.com/originals/1a/2f/ce/1a2fce9d9ad2c08b01995324bff7a9b3.jpg');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: 100%;
-        }
-        </style>#}
-        <style>
-        img {
-            max-width:100%;
-            height: auto;
-
-        }
-        .bi {  
-            text-align: center;  
-            margin: 5px 2px;  
-            font-size: 25px;  
-            width: 25px;  
-        }  
-        .bi:hover {
-            opacity: 0.6;
-        }
-        
-        .btn-grad {background-image: linear-gradient(to right, #348F50 0%, #56B4D3  51%, #348F50  100%)}
-        .btn-grad {
-            text-transform: uppercase;
-            transition: 0.5s;
-            background-size: 200% auto;
-            color: white;            
-            box-shadow: 0 0 20px #eee;
-            border-radius: 10px;
-        } 
-        .btn-grad:hover {
-            background-position: right center; /* change the direction of the change here */
-            color: #fff;
-            text-decoration: none;
-        }
-        body{ height:100vh; margin:0; }
-
-        header{ min-height:50px; }
-        footer{ min-height:50px; }
-
-        /* Trick */
-        body{ 
-            display:flex; 
-            flex-direction:column; 
-        }
-
-        footer{
-            margin-top:5%;    
-        }
-        </style>
     </head>
     <body>
         <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
@@ -134,29 +131,36 @@
         </nav>
         
         {#<img src='https://jerryjenkins.com/wp-content/uploads/2019/08/Finding-the-Best-Creative-Writing-Blogs-on-the-Internet-scaled.jpg'></img>#}
-        {% block body %}{% endblock %}
-
-        <footer id='footer' class='footer en-gb'>
-            <div id='nav-client-footer' class='nav-client'>
-                <div class='grid-container footer-content footer-desktop'>
-                    <div class='nav-section' style='text-align:center;'>
-                        <a href='https://www.google.com/maps/place/Code+Seed/@40.6198616,22.9554245,17z/data=!3m1!4b1!4m5!3m4!1s0x14a839cc4275a54d:0x7168c06d77132515!8m2!3d40.6198597!4d22.9576062' style='color: #000000; text-decoration: none;'><i class='bi bi-geo-alt-fill'></i>Leof. Stratou 16, Thessaloniki, 546 40 Greece</a>
-                        <a href='https://www.google.com/maps/place/Code+Seed/@40.6198616,22.9554245,17z/data=!3m1!4b1!4m5!3m4!1s0x14a839cc4275a54d:0x7168c06d77132515!8m2!3d40.6198597!4d22.9576062' style='color: #000000; text-decoration: none;'><i class='bi bi-telephone-fill'></i>+30 23108 59 462</a>
-                        <a href='https://www.google.com/maps/place/Code+Seed/@41.1494561,24.1485122,15z/data=!4m5!3m4!1s0x0:0x473f9d57292e99b9!8m2!3d41.1494561!4d24.1485122' style='color: #000000; text-decoration: none;'><i class='bi bi-geo-alt-fill'></i>Verginas 51, Drama 661 32 Greece</a>
-                        <a href='https://www.google.com/maps/place/Code+Seed/@41.1494561,24.1485122,15z/data=!4m5!3m4!1s0x0:0x473f9d57292e99b9!8m2!3d41.1494561!4d24.1485122' style='color: #000000; text-decoration: none;'><i class='bi bi-telephone-fill'></i>+30 25211 05 247</a>
-                        <a id='copy'><i onclick="copyEvent('copy')" class='bi bi-envelope'></i>hello@codeseed.io</a>               
+        <div id="page-container">
+            <div id="content-wrap">
+                {% block body %}{% endblock %}
+                {% block javascripts %}
+                    {{ encore_entry_script_tags('app') }}
+                {% endblock %}
+            </div>
+            <footer id='footer' class='footer en-gb'>
+                <div id='nav-client-footer' class='nav-client'>
+                    <div class='grid-container footer-content footer-desktop'>
+                        <div class='nav-section' style='text-align:center;'>
+                            <a href='https://www.google.com/maps/place/Code+Seed/@40.6198616,22.9554245,17z/data=!3m1!4b1!4m5!3m4!1s0x14a839cc4275a54d:0x7168c06d77132515!8m2!3d40.6198597!4d22.9576062' style='color: #000000; text-decoration: none;'><i class='bi bi-geo-alt-fill'></i>Leof. Stratou 16, Thessaloniki, 546 40 Greece</a>
+                            <a href='https://www.google.com/maps/place/Code+Seed/@40.6198616,22.9554245,17z/data=!3m1!4b1!4m5!3m4!1s0x14a839cc4275a54d:0x7168c06d77132515!8m2!3d40.6198597!4d22.9576062' style='color: #000000; text-decoration: none;'><i class='bi bi-telephone-fill'></i>+30 23108 59 462</a>
+                            <a href='https://www.google.com/maps/place/Code+Seed/@41.1494561,24.1485122,15z/data=!4m5!3m4!1s0x0:0x473f9d57292e99b9!8m2!3d41.1494561!4d24.1485122' style='color: #000000; text-decoration: none;'><i class='bi bi-geo-alt-fill'></i>Verginas 51, Drama 661 32 Greece</a>
+                            <a href='https://www.google.com/maps/place/Code+Seed/@41.1494561,24.1485122,15z/data=!4m5!3m4!1s0x0:0x473f9d57292e99b9!8m2!3d41.1494561!4d24.1485122' style='color: #000000; text-decoration: none;'><i class='bi bi-telephone-fill'></i>+30 25211 05 247</a>
+                            <a id='copy'><i onclick="copyEvent('copy')" class='bi bi-envelope'></i>hello@codeseed.io</a>               
+                        </div>
+                        <div class='nav-section' style='text-align:center;'>
+                            <a style="color: #3b5998;" href='https://www.facebook.com/AnestisKirke'role="button">
+                                <i class="bi bi-facebook"></i></a>
+                            <a style="color: #e95950;" href='https://www.instagram.com/anestis.khrke/'role="button">
+                                <i class="bi bi-instagram"></i></a>
+                            <a style="color: #007bb5;" href='https://www.linkedin.com/in/anestis-kyrkenidis-521733143/' role="button">
+                                <i class='bi bi-linkedin'></i></a>
+                        </div>
                     </div>
-                    <div class='nav-section' style='text-align:center;'>
-                        <a style="color: #3b5998;" href='https://www.facebook.com/AnestisKirke'role="button">
-                            <i class="bi bi-facebook"></i></a>
-                        <a style="color: #e95950;" href='https://www.instagram.com/anestis.khrke/'role="button">
-                            <i class="bi bi-instagram"></i></a>
-                        <a style="color: #007bb5;" href='https://www.linkedin.com/in/anestis-kyrkenidis-521733143/' role="button">
-                            <i class='bi bi-linkedin'></i></a>
-                    </div>
-                </div>
-            </div>  
-        </footer>
+                </div>  
+            </footer>
+        </div>
+        
         <script>
             function copyEvent(id)
             {
