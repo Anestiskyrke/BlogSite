@@ -16,5 +16,5 @@ The above command runs the migration files, creating the database.
 
 Afterwards in your browser, go to localhost and create an account and enjoy the blogsite.
 
-To connect to the database through an application, i.e DBeaver CE the following image should be sufficient. The database name, username and root password in this example are located inside the file _docker-compose.yml._ 
+To connect to the database through an application, i.e DBeaver CE, the following image should be sufficient. The database name, username and root password in this example are located inside the file _docker-compose.yml._ 
 ![image](https://user-images.githubusercontent.com/83977384/188494939-e3805fd5-c1fa-42f9-8445-bb6a74d353e0.png)
