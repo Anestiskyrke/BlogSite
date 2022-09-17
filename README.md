@@ -1,4 +1,4 @@
-# blogsite PHP Symfony
+# Very simple blogsite written with PHP Symfony framework
 Create a docker container and run it by using
 
 ```bash
